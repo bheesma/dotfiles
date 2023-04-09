@@ -59,5 +59,6 @@ ansible() { check_devops_container "$0 $*" }
 node() { check_devops_container "$0 $*" }
 npm() { check_devops_container "$0 $*" }
 cdktf() { check_devops_container "$0 $*" }
+custodian() { check_devops_container "$0 $*" }
 
 #------------------------------------------------
