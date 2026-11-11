@@ -7,7 +7,12 @@ REPO="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p ~/.ai ~/.claude/skills ~/.copilot/skills ~/.copilot/instructions
 cp -R "$REPO/.ai/." ~/.ai/
 ln -sfn ~/.ai/claude.md ~/.claude/CLAUDE.md
-ln -sfn ~/.ai/copilot.instructions.md ~/.copilot/instructions/lean.instructions.md
+# Copilot needs front matter and has no import syntax, so generate its file from instructions.md
+rm -f ~/.ai/copilot.instructions.md ~/.copilot/instructions/lean.instructions.md
+{
+  printf -- "---\ndescription: Global instructions\napplyTo: '**/*'\n---\n\n"
+  cat ~/.ai/instructions.md
+} > ~/.copilot/instructions/lean.instructions.md
 for dir in ~/.ai/skills/*/; do
   name="$(basename "$dir")"
   ln -sfn "${dir%/}" ~/.claude/skills/"$name"
